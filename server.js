@@ -8,14 +8,9 @@ app.use(express.static('public'));
 app.get('/', (req, res) => {
     res.sendFile('index');
 });
-
 const server = app.listen(app.get('port'), () => {
     console.log('Application Running: http://localhost:%d', server.address().port);
 });
-
-let current = 0;
-let total, imgFiles;
-let timerId = null;
 
 function readFile(){
     fs.readdir('./public/images', (err, files) => {
@@ -58,9 +53,13 @@ function stop() {
     clearInterval(timerId);
 }
 
+let current = 0;
+let total, imgFiles;
+let timerId = null;
+
+readFile();
 const io = require('socket.io')(server); 
-io.on('connection', async (socket) => {
-    await readFile();
+io.on('connection', (socket) => {
     console.log(`user connected : ${socket.id}`);    
     io.emit('image_display', current, total, imgFiles);
 
