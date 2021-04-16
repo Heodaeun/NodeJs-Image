@@ -1,0 +1,18 @@
+{
+  "name": "digital-frame-web",
+  "version": "1.0.0",
+  "description": "디지털 액자 웹 사이트",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server"
+  },
+  "author": "nno3onn",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
