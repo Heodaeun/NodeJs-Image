@@ -21,10 +21,10 @@ function isVertical() {
     return vertical == true ? 'height': 'width';
 }
 function resizeImage(imgFiles, current){
-    var img = new Image();
+    const img = new Image();
     img.src = './images/' + imgFiles[current];
-    var width = img.width;
-    var height = img.height;
+    const width = img.width;
+    const height = img.height;
 
     vertical = (height >= width ? true : false);
     isMobile();
@@ -32,7 +32,7 @@ function resizeImage(imgFiles, current){
 }
 
 function displayInfo(current, total, imgFiles) {
-    var img = resizeImage(imgFiles, current);
+    const img = resizeImage(imgFiles, current);
     $('.catImage').attr("src", img.src);
     $('.pages').text(current+1 + '/' + total);
 }
@@ -40,7 +40,7 @@ function displayInfo(current, total, imgFiles) {
 function dropdown(button) {
     $(".dropdownMenuButton").html(button);
 
-    var time = parseInt(button.charAt(0));
+    const time = parseInt(button.charAt(0));
     socket.emit('dropdown', isNaN(time) ? 0 : time*1000);
 }
 
