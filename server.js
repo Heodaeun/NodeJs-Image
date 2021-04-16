@@ -12,14 +12,9 @@ const server = app.listen(app.get('port'), () => {
     console.log('Application Running: http://localhost:%d', server.address().port);
 });
 
-function readFile(){
-    fs.readdir('./public/images', (err, files) => {
-        if(err) return console.error(err);
-
-        imgFiles = files;
-        total = files.length;
-    });
-};
+let current = 0;
+let total, imgFiles;
+let timerId = null;
 
 function clickButton(num, s) {  //s=0:auto, s=1:button / num=0:back, num=1:next
     if(s == 1 || current+1 == total) {   //이전에 수행중인 auto 시간 제거
@@ -53,15 +48,37 @@ function stop() {
     clearInterval(timerId);
 }
 
-let current = 0;
-let total, imgFiles;
-let timerId = null;
+function watchImage(){
+    fs.watch('./public/images', async (event, files) => {
+        try {
+            console.log('The type of change was: ', event, ", file: ", files);
+            await readFile();
+            io.emit('image_display', current, total, imgFiles);
+        } catch (err) {
+            console.error(err);
+        }
+    });
+}
+
+function readFile(){
+    return new Promise((resolve, reject) => {
+        fs.readdir('./public/images', (err, files) => {
+            if(err) return console.error(err);
+            imgFiles = files;
+            total = files.length;
+            resolve();
+        });
+    });
+};
 
 readFile();
+
 const io = require('socket.io')(server); 
-io.on('connection', (socket) => {
+io.on('connection',  (socket) => {
     console.log(`user connected : ${socket.id}`);    
     io.emit('image_display', current, total, imgFiles);
+
+    watchImage();
 
     socket.on('button', (num) => {
         clickButton(num, 1);
