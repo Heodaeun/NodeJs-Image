@@ -62,13 +62,9 @@ function stop() {
 
 function watchImage(){
     fs.watch('./public/images', async (event, files) => {
-        try {
-            console.log('The type of change was: ', event, ", file: ", files);
-            await readFile();
-            io.emit('image_display', current, total, imgFiles);
-        } catch (err) {
-            console.error(err);
-        }
+        console.log('The type of change was: ', event, ", file: ", files);
+        await readFile();
+        io.emit('image_display', current, total, imgFiles);
     });
 }
 
@@ -92,8 +88,8 @@ function readLine() {
         }else if(line == 'stop') {
             return stop();
         }else if(line.slice(0,4) == 'auto') {
-            let time = Number(line.slice(4, line.length));
-            if (isNaN(time)==false) {
+            const time = Number(line.slice(4, line.length));
+            if (isNaN(time) === false) {
                 setTime(time * 1000);
             }
         }

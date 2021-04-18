@@ -11,7 +11,7 @@ function dropdown(time) {
 
 function isMobile() {
     $(".catImage").css(isVertical(),
-        matchMedia("screen and (max-width:480px)").matches 
+        matchMedia("screen and (max-width:768px)").matches 
             ? '250px'   // Mobile version
             : '450px'   // PC version
     );
