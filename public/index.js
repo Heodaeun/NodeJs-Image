@@ -4,7 +4,7 @@ let socket = io();
 $(window).resize(isMobile);
 
 function dropdown(time) {
-    let name = (time==0) ? 'stop' : time + ' sec';
+    let name = (time===0) ? 'stop' : time + ' sec';
     $(".dropdownMenuButton").html(name);
     socket.emit('dropdown', time*1000);
 }
@@ -42,9 +42,9 @@ socket.on('image_display', (current, total, imgFiles) => {
 });
 
 $(".backbtn").on('click', () => {
-    socket.emit('button', 0);
+    socket.emit('button', 1);
 });
 
 $(".nextbtn").on('click', () => {
-    socket.emit('button', 1);
+    socket.emit('button', 2);
 });
