@@ -53,7 +53,7 @@ function setTime(time) { // auto 기능 실행
             return timerId._repeat = time;
         }
     } // 타이머가 실행 중이 아닌 경우
-    timerId = setInterval( () => { clickButton(0); }, time);
+    timerId = setInterval( () => clickButton(0), time);
 }
 
 function stop() {
@@ -92,7 +92,7 @@ function readLine() {
         }else if(line == 'stop') {
             return stop();
         }else if(line.slice(0,4) == 'auto') {
-            time = Number(line.slice(4, line.length));
+            let time = Number(line.slice(4, line.length));
             if (isNaN(time)==false) {
                 setTime(time * 1000);
             }
