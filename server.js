@@ -26,7 +26,7 @@ function clickButton(num) { // num: 0(auto) 1(back) 2(next)
         stop(); // 타이머가 실행 중일 수 있으므로 타이머를 중지시킴
     }
     if(num === 1) { // back button
-        console.log('Execute the next button.')
+        console.log('Execute the back button.');
         if(current === 0) { // 첫 페이지인 경우
             return console.log('This is the first page.');
         }
